@@ -281,35 +281,37 @@ class _BetterPlayerMaterialControlsState
                 height: _controlsConfiguration.controlBarHeight,
                 width: double.infinity,
                 child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        IconButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          icon: Icon(
-                            Icons.arrow_back,
-                            color: _controlsConfiguration.textColor,
-                          ),
-                        ),
-                        Text(
-                          title,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                            color: _controlsConfiguration.textColor,
-                            fontSize: 16.0,
-                          ),
-                        ),
-                        if (_controlsConfiguration.enablePip)
-                          _buildPipButtonWrapperWidget(
-                              controlsNotVisible, _onPlayerHide),
-                          _buildMoreButton(),
-                      ],
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      icon: Icon(
+                        Icons.arrow_back,
+                        color: _controlsConfiguration.textColor,
+                      ),
                     ),
+                    Expanded(
+                      child: Text(
+                        title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                          color: _controlsConfiguration.textColor,
+                          fontSize: 16.0,
+                        ),
+                      ),
+                    ),
+                    if (_controlsConfiguration.enablePip)
+                      _buildPipButtonWrapperWidget(
+                          controlsNotVisible, _onPlayerHide),
+                    _buildMoreButton(),
+                  ],
+                ),
               ),
             )
           : const SizedBox(),
@@ -340,6 +342,7 @@ class _BetterPlayerMaterialControlsState
         final bool isPipSupported = snapshot.data ?? false;
         if (isPipSupported &&
             _betterPlayerController!.betterPlayerGlobalKey != null) {
+          print("Pip supported");
           return AnimatedOpacity(
             opacity: hideStuff ? 0.0 : 1.0,
             duration: betterPlayerControlsConfiguration.controlsHideTime,
@@ -355,6 +358,7 @@ class _BetterPlayerMaterialControlsState
             ),
           );
         } else {
+          print("Pip not supported");
           return const SizedBox();
         }
       },
